@@ -1,32 +1,151 @@
 body{
-    max-width: 100vw;
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Steradian TRIAL', sans-serif;
 }
-header{
-    background-color: white;
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+}
+
+.header{
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
-.quiz-bih {
-    width: 132px;
-    height: 42px;
-    margin-top: 60px;
-    margin-left: 120px;
+    width: 82vw;
+    padding-top: 42px;
 }
 
-.a-tags {
-    width: 273px;
+.content{
+    width: 100vw;
+    height: 83vh;
+    background-image: url("photos/home-bg.png");
+    background-position: right;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    width: 82vw;
+    height: 100%;
+}
+
+.main h1{
+    color: #2559D2;
+    font: Steradian TRAIL;
+    font-size: 64px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 83.2px;
+}
+
+.logo{
+    display: flex;
+    width: 132px;
     height: 42px;
-    margin-top: 61px;
-    padding: 10px;
-    gap: 28px;
 }
-.a-tags a {
+
+.logo img{
+    margin-top: 10px;
+    width: 80%;
+    height: 60%;
+}
+
+.nav{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    padding-left: 50px;
+}
+
+.nav ul{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     cursor: pointer;
-    font-family: Steradian TRIAL;
+    width: 275px;
+    height: 41px;
+    font: Steradian TRAIL;
     font-weight: 400;
-    size: 16px;
-    line-height: 20.8px;
-    color: black;
+    line-height: 20.8;
     gap: 28px;
 }
+
+.nav a{
+    text-decoration: none;
+    color: inherit;
+}
+
+.btn-nav{
+    width: 265px;
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    gap: 28px;
+}
+
+.btn-prijava{
+    background-color: white;
+    border: 0.5px solid #2559D2;
+    border-radius: 5px;
+    color: #2559D2;
+    cursor: pointer;
+    width: 109px;
+    height: 34px;
+}
+
+.btn-registracija{
+    width: 128px;
+    height: 34px;
+    background-color: #2559D2;
+    border: 0.5px solid #2559D2;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.btn-start{
+    width: 384px;
+    height: 71px;
+    background-color: #2559D2;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+
+.black-text{
+    color: black;
+}
+
+.info{
+    font-size: 16px;
+    margin-left: 115px;
+}
+
+
+
+
+
+.container-second{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+}
+
+
