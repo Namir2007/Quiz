@@ -5,51 +5,137 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Namir Quiz</title>
     <link rel="stylesheet" href="styles.css" />
-    <link href="https://fonts.cdnfonts.com/css/steradian-trial" rel="stylesheet">
+    <link
+      href="https://fonts.cdnfonts.com/css/steradian-trial"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <section class="home">
-      <div class="container">
-        <div class="header">
-          <div class="logo">
-            <img src="./photos/Quiz BiH.png">
-          </div>
-          <div class="nav">
-            <ul>
-              <li><a href="index.html">Početna</a></li>
-              <li><a href="#">Upustva</a></li>
-              <li><a href="#">Ljestvica</a></li>
-            </ul>
-          </div>
-          <div class="btn-nav">
-            <button class="btn-prijava">Prijava</button>
-            <button class="btn-registracija">Registruj se</button>
+    <section id="home">
+    <div class="container">
+      <div class="header">
+        <div class="logo-Quiz-BiH"></div>
+        <div class="navigation">
+          <ul>
+            <a href="#home">
+              <li>Početna</li>
+            </a>
+            <a href="#instruction">
+              <li>Uputstva</li>
+            </a>
+            <a href="#leaderboard">
+              <li>Ljestvica</li>
+            </a>
+          </ul>
+        </div>
+        <div class="buttons">
+          <button id="login">Prijavi se</button>
+          <button id="register">Registruj se</button>
+        </div>
+      </div>
+      <div class="content">
+        <div class="main">
+          <h1>
+            <span class="black-text"
+              >Pokažite svoje<br />
+              znanje o
+            </span>
+            Bosni i <br />Hercegovini
+          </h1>
+          <p class="paragraph1">
+            Testirajte svoje znanje o historiji, kulturi i znamenitostima <br />
+            naše predivne domovine! Koliko dobro poznajete Bosnu i <br />
+            Hercegovinu?
+          </p>
+          <button id="start">Započni kviz</button>
+          <div class="mali-dio">
+            <p class="paragraph2">+200 odigranih kvizova</p>
           </div>
         </div>
+      </div>
 
-        <div class="content">
-          <div class="main">
-            <h1><span class="black-text">Pokažite svoje <br> znanje o</span> Bosni i <br> Hercegovini!</h1>
-            <p>
-              Testirajte svoje znanje o historiji, kulturi i znamenitostima <br> naše
-              predivne domovine! Koliko dobro poznajete Bosnu i <br> Hercegovinu?
-            </p>
-            <button class="btn-start">Započni kviz</button>
-            <div class ="info">
-            <h4>+200 odigranih kvizova</h4>
+      <div class="instructions" id="instruction">
+        <div class="ins-content">
+          <div class="top">
+            <div class="upper">
+              <div class="magic-icon">
+                <h1>Kako funkcioniše kviz?</h1>
+              </div>
+              <div class="btn-box">
+                <button id="start2">Započni Kviz</button>
+              </div>
+            </div>
+            <div class="lower-content">
+              <p>
+                U našem kvizu, jednostavno je izazvati sebe i druge! Odaberite
+                kviz, odgovorite na pitanja u zadanom <br />
+                vremenu i osvojite što više tačnih odgovora. Na kraju, možete
+                provjeriti svoj rezultat i uporediti se sa <br />
+                najboljima na leaderboardu. Brzo, zabavno i edukativno!
+              </p>
+            </div>
           </div>
+          <div class="bottom-content">
+            <div class="card1" id="card">
+              <div class="card-content">
+                <h1>Prijavi se</h1>
+                <p>Registruj se na Quiz BiH !</p>
+              </div>
+            </div>
+            <div class="card2" id="card">
+              <div class="card-content">
+                <h1>Uradi kviz</h1>
+                <p>Odgovori na sva pitanja koja imamo !</p>
+              </div>
+            </div>
+            <div class="card3" id="card">
+              <div class="card-content">
+                <h1>Budi #1</h1>
+                <p>Osvoji ljestvicu i budi prvi !</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </section>
-    <section class="home-function">
-      <div class="container-second">
-        <div class=""></div>
-        <div class="logo-icons">
-          <img src="./photos/healthicons_magic.png">
+
+      <div class="leaderboard-cont " id="leaderboard">
+        <div class="lead-cont">
+          <div class="leaderboard">
+            <div class="leader-border">
+              <div class="text-border">
+                <h1>Takmičite se i osvajajte vrh !</h1>
+                <p>
+                  Izazovite svoje prijatelje i igrače širom sveta. Pokažite da
+                  ste najbolji i zauzmite svoje mjesto na leaderboardu!
+                </p>
+                <button class="start3">Započni kviz</button>
+              </div>
+              <div class="scale">
+                <div id="score" class="score-shadow"></div>
+                <div id="score"></div>
+                <div id="score"></div>
+                <div id="score"></div>
+                <div id="score"></div>
+              </div>
+              <div class="you">
+                <div id="score" class="score-shadow"></div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="function"></div>
+      </div>
+    </div>
+  </section>
+
+    <section id="login">
+      <div class="container-login">
+
       </div>
     </section>
+
+
+
+
+    <script src="script.js"></script>
   </body>
 </html>
