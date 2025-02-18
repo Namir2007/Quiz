@@ -1,0 +1,40 @@
+input {
+    border: 0px;
+    border-bottom: 1px solid gray;
+    width: 350px;
+  }
+  .login-container {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+  }
+  .login-img{
+      height: 100vh;
+      width: 100vw;
+      background-color: blue;
+  }
+  .login-form{
+      width: 45vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+  }
+  form {
+      display: flex;
+      flex-direction:column;
+      gap: 30px;
+  }
+  input {
+      border: 0px;
+      border-bottom: 1px solid gray;
+      width: 350px;
+  }
+  .logo{
+      height: 100px;
+      width: auto;
+      background-size: contain;
+      background-image: url('../images/logo.png');
+      background-repeat: no-repeat;
+  }

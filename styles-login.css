@@ -1,0 +1,125 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.image-section {
+    width: 70%;
+    max-height: 1024px;
+    background-color: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+  
+  .image-section img {
+    width: 100%;
+    height: auto;
+    max-height: 1024px;
+    object-fit: cover;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+
+.login-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.logo-Quiz-BiH {
+  width: 99px;
+  height: 31px;
+  display: flex;
+  background-image: url(photos/Quiz\ BiH.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+p {
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.google-login {
+  background-color: #FFFFFF;
+  color: black;
+  border: 0.2px solid #000000;
+  box-shadow: 0px 0px 5px black;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 300px;
+}
+
+label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button[type="submit"] {
+  background-color: #2559D2;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button-text{
+    display: flex;
+}
+
+
+
+.second-part{
+    margin-left: 50px;
+}
+
+a {
+  color: #4285f4;
+  text-decoration: none;
+}
+
+.quote {
+  font-style: italic;
+  color: #555;
+  margin-top: 20px;
+}

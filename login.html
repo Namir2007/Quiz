@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Section</title>
+    <link rel="stylesheet" href="styles-login.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="image-section">
+        <img src="photos/login slika.png" />
+      </div>
+      <div class="login-section">
+        <div class="logo-Quiz-BiH"></div>
+        <h1>Prijavite se na vas račun</h1>
+        <p>Unesite informacije za prijavu</p>
+        <button class="google-login">Prijavi se putem Google računa</button>
+        <form>
+          <label for="email">E-mail adresa</label>
+          <input type="email" id="email" name="email" required />
+          <label for="password">Lozinka</label>
+          <input type="password" id="password" name="password" required />
+          <div class="button-text">
+            <p class="first-part">Zaboravili ste lozinku ?</p>
+            <p class="second-part"><a href="#">Restartuj lozinku.</a></p>
+          </div>
+        </form>
+        <button id="submit" type="submit">Prijavi se</button>
+        <p>Nemate račun? <a href="register.html">Registrujte se.</a></p>
+      </div>
+    </div>
+
+    <script src="login.js"></script>
+  </body>
+</html>
