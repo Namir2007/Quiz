@@ -19,4 +19,4 @@ const createUser = () => {
     .catch((error) => {
       console.log(error);
     });
-}
+};
