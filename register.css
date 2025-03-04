@@ -1,17 +1,17 @@
 body {
-  margin: 0px;
-  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  height: 100%;
   font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
 }
 
 .register-container {
   display: flex;
-  width: 100vw;
   height: 100vh;
-  overflow: hidden;
 }
 
-.register-img {
+.register-image-section {
   width: 70%;
   max-height: 1024px;
   background-color: #ddd;
@@ -21,10 +21,9 @@ body {
   overflow: hidden;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
-  
 }
 
-.register-img img {
+.register-image-section img {
   width: 100%;
   height: auto;
   max-height: 1024px;
@@ -33,21 +32,44 @@ body {
   border-bottom-right-radius: 20px;
 }
 
-.register-form {
-  width: 45vw;
+.register-form-section {
+  flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  justify-content: space-around;
+  padding: 20px;
+  background-color: #fff;
 }
 
-form {
+.register-heading {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.logo-Quiz-BiH {
+  width: 99px;
+  height: 31px;
+  display: flex;
+  background-image: url(photos/Quiz\ BiH.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  margin-bottom: 20px;
+}
+
+.register-paragraph {
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.register-form {
   display: flex;
   flex-direction: column;
   gap: 30px;
 }
 
-input {
+.register-input {
   border: 0px;
   border-bottom: 1px solid gray;
   width: 350px;
@@ -55,21 +77,33 @@ input {
   font-size: 16px;
 }
 
-input:focus {
+.register-input:focus {
   outline: none;
   border-bottom: 2px solid #007bff;
 }
 
-.register-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #007bff;
+.register-submit-button {
+  background-color: #2559d2;
+  width: 360px;
+  font-size: 16px;
   color: white;
   border: none;
+  margin-top: 60px;
+  margin-bottom: 10px;
+  padding: 10px;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.register-button:hover {
-  background-color: #0056b3;
+.register-link-text {
+  display: flex;
+}
+
+.register-link-text p:last-child {
+  margin-left: 15px;
+}
+
+.register-link {
+  color: #4285f4;
+  text-decoration: none;
 }

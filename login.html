@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login Section</title>
-    <link rel="stylesheet" href="styles-login.css" />
+    <link rel="stylesheet" href="login.css" />
   </head>
   <body>
     <div class="container">
@@ -17,10 +17,8 @@
         <p>Unesite informacije za prijavu</p>
         <button class="google-login">Prijavi se putem Google računa</button>
         <form id="loginForm">
-          <label for="email">E-mail adresa</label>
-          <input type="email" id="email" name="email" required />
-          <label for="password">Lozinka</label>
-          <input type="password" id="password" name="password" required />
+          <input type="email" placeholder="Email" id="email" />
+          <input type="password" placeholder="Lozinka" id="password" />
           <div class="button-text">
             <p class="first-part">Zaboravili ste lozinku ?</p>
             <p class="second-part"><a href="#">Restartuj lozinku.</a></p>
@@ -28,7 +26,6 @@
         </form>
         <button id="submit" type="submit">Prijavi se</button>
         <p>Nemate račun? <a href="register.html">Registrujte se.</a></p>
-        <button id="score">Dohvati korisnike</button>
       </div>
     </div>
 

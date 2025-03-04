@@ -4,30 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registracija</title>
-    <link type="text/css" rel="stylesheet" href="register.css" />
+    <link rel="stylesheet" href="register.css" /> <!-- Koristi register.css -->
   </head>
   <body>
-    <section id="register-section">
-      <div class="register-container">
-        <div class="register-img">
-          <img src="photos/register photo.png" />
-        </div>
-        <div class="register-form">
-          <div class="logo"></div>
-          <div>
-            <h1 class="register-heading">Prijavite se na vaš račun</h1>
-            <p class="paragraph">Unesite informacije za prijavu</p>
-          </div>
-          <form id="registerForm">
-            <input type="email" placeholder="Email" id="email" />
-            <input type="text" placeholder="Ime" id="firstName" />
-            <input type="text" placeholder="Prezime" id="lastName" />
-            <input type="password" placeholder="Lozinka" id="password" />
-          </form>
-          <button class="register-button" id="button">Prijavi se</button>
+    <div class="register-container">
+      <div class="register-image-section">
+        <img src="photos/register photo.png" />
+      </div>
+      <div class="register-form-section">
+        <div class="logo-Quiz-BiH"></div>
+        <h1 class="register-heading">Registrujte se na Quiz BiH</h1>
+        <p class="register-paragraph">Popunite informacije za registraciju</p>
+        <form class="register-form" id="registerForm">
+          <input class="register-input" type="email" placeholder="Email" id="email" />
+          <input class="register-input" type="text" placeholder="Ime" id="firstName" />
+          <input class="register-input" type="password" placeholder="Lozinka" id="password" />
+          <input class="register-input" type="password" placeholder="Ponovi lozinku" id="password-again" />
+        </form>
+        <button class="register-submit-button" id="submit" type="submit">Registrujte se</button>
+        <div class="register-link-text">
+          <p>Već imate račun?</p>
+          <p><a class="register-link" href="login.html">Prijavite se.</a></p>
         </div>
       </div>
-    </section>
+    </div>
     <script src="register.js"></script>
   </body>
 </html>
