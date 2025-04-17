@@ -1,7 +1,5 @@
-console.log(123)
 const button = document.getElementById("submit");
 const loginForm = document.getElementById("loginForm");
-console.log(button)
 
 function validateForm() {
   const email = document.getElementById("email").value;
@@ -19,25 +17,23 @@ async function loginUser() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    const response = await fetch(
-      "https://quiz-be-zeta.vercel.app/auth/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          "password": password,
-        }),
-      }
-    );
+    const response = await fetch("https://quiz-be-zeta.vercel.app/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password: password,
+      }),
+    });
 
     const data = await response.json();
 
     if (response.ok) {
       localStorage.setItem("authToken", data.token);
       console.log("Token je sačuvan:", data.token);
+      window.location.href = "index.html";
     } else {
       console.error("Greška pri prijavi:", data.message);
       alert(data.message);
