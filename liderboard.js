@@ -32,9 +32,11 @@ async function loadLeaderboard() {
 
     leaderboard.forEach((item, index) => {
       if (index < scoreDivs.length) {
-        scoreDivs[index].textContent = `#${index < 5 ? index + 1 : "Ti"} ${item.username} - ${
-          item.bestScore
-        } poena`;
+        const position = index < 5 ? index + 1 : "Ti";
+        scoreDivs[index].innerHTML = `
+          <span class="left"><span>#${position}</span><span>${item.username}</span></span>
+          <span class="right">${item.bestScore} poena</span>
+        `;
       }
     });
   } catch (error) {

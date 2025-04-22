@@ -379,6 +379,13 @@
   background-color: #ffffff;
   border-radius: 5px;
   margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 25px;
+  font-weight: bold;
+  font-size: 18px;
+  color: black;
 }
 
 .score-shadow {
@@ -387,6 +394,18 @@
 
 .you {
   margin-top: 60px;
+}
+
+.left {
+  display: flex;
+  gap: 12px;
+  margin-left: 0px;
+  color: black;
+}
+
+.right {
+  text-align: right;
+  color: black;
 }
 
 @media screen and (max-width: 768px) {
