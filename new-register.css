@@ -1,0 +1,121 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  #bg-video {
+    position: fixed;
+    z-index: -2;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+  }
+  
+  .video-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: -1;
+  }
+  
+  .register-container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+    position: relative;
+  }
+  
+  .register-form-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .register-heading {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .logo-Quiz-BiH {
+    width: 99px;
+    height: 31px;
+    display: flex;
+    background-image: url(photos/Quiz\ BiH.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    margin-bottom: 20px;
+  }
+  
+  .register-paragraph {
+    font-size: 14px;
+    margin-bottom: 30px;
+  }
+  
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .register-input {
+    border: 0px;
+    border-bottom: 1px solid gray;
+    width: 350px;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .register-input:focus {
+    outline: none;
+    border-bottom: 2px solid #007bff;
+  }
+  
+  .register-submit-button {
+    background-color: #2559d2;
+    width: 360px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    margin-top: 60px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .register-link-text {
+    display: flex;
+    margin-top: 20px;
+  }
+  
+  .register-link-text p:last-child {
+    margin-left: 15px;
+  }
+  
+  .register-link {
+    color: #4285f4;
+    text-decoration: none;
+  }
+  
