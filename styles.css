@@ -408,11 +408,103 @@
   color: black;
 }
 
-.introduction-quiz{
-  background-color: white;
-  width: 50px;
-  height: 50px;
+.introduction-quiz {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.2);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
+
+.tekst1 h1 {
+  font-size: 24px;
+}
+
+.tekst1 p {
+  font-size: 14px;
+}
+
+.quiz-content {
+  background-color: white;
+  padding: 40px;
+  border-radius: 15px;
+  width: 402px;
+  height: 504px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.logo-Quiz-BiH-2 {
+  width: 314px;
+  height: 23px;
+  display: flex;
+  background-image: url(photos/Quiz\ BiH.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.container-1, .container-2, .container-3 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.container-1 p, .container-2 p, .container-3 p {
+  font-size: 16px;
+}
+
+.container-2 img {
+  width: 40px;
+  height: 40px;
+}
+
+.pp1, .pp2, .pp3 {
+  display: flex;
+} 
+
+.img-pp {
+  width: 18px;
+  height: 18px;
+}
+
+.container-3 {
+  display: flex;
+  flex-direction: row;
+  margin-left: 100px;
+}
+
+.btn-odustani {
+  background-color: white;
+  color: #2559d2;
+  border: 2px solid #2559d2;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-start {
+  background-color: #2559d2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
 @media screen and (max-width: 768px) {
   .header {
     flex-direction: column;

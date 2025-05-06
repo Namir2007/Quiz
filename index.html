@@ -50,16 +50,43 @@
               naše predivne domovine! Koliko dobro poznajete Bosnu i <br />
               Hercegovinu?
             </p>
-            <a href=""><button id="start">Započni kviz</button></a>
+            <button id="start" onclick="showQuiz()">Započni kviz</button>
             <div class="mali-dio">
               <p class="paragraph2">+200 odigranih kvizova</p>
             </div>
           </div>
         </div>
 
-        <div class="introduction-quiz">
-          
+        <div class="introduction-quiz" id="introQuiz">
+          <div class="quiz-content">
+            <div class="container-1">
+              <div class="logo-Quiz-BiH-2"></div>
+              <div class="tekst1">
+                <h1>Spremite se za kviz !</h1>
+                <p>Pažljivo birajte odgovore i pokušajte osvojiti što više bodova prije nego istekne</p>
+              </div>
+            </div>
+            <div class="container-2">
+              <div class="pp1">
+              <img src="photos/trophy.svg" class="img-pp">
+              <p>Svaki tačan odgovor nosi 10 bodova</p>
+            </div>
+            <div class="pp2">
+              <img src="photos/clock.svg" class="img-pp">
+              <p>Za svako pitanje imate 10 sekundi da odgovorite</p>
+            </div>
+            <div class="pp3">
+              <img src="photos/medal.svg" class="img-pp">
+              <p>Ostvari što bolji rezultat i rangiraj se na ljestvicu</p>
+            </div>
+            </div>
+            <div class="container-3">
+              <button class="btn-odustani" onclick="hideQuiz()">Odustani</button>
+              <a href="start-questions-second-page.html"><button class="btn-start">Pokreni kviz</button></a>
+            </div>
+          </div>
         </div>
+        
 
         <div class="instructions" id="instruction">
           <div class="ins-content">
@@ -69,7 +96,7 @@
                   <h1>Kako funkcioniše kviz?</h1>
                 </div>
                 <div class="btn-box">
-                  <button href="introduction-quiz.html" id="start2">Započni Kviz</button>
+                  <button id="start" onclick="showQuiz()">Započni kviz</button>
                 </div>
               </div>
               <div class="lower-content">
@@ -115,7 +142,7 @@
                     Izazovite svoje prijatelje i igrače širom sveta. Pokažite da
                     ste najbolji i zauzmite svoje mjesto na leaderboardu!
                   </p>
-                  <a href="introduction-quiz.html"><button class="start3">Započni kviz</button></a>
+                  <button id="start" onclick="showQuiz()">Započni kviz</button>
                 </div>
                 <div class="scale">
                   <div id="score" class="score-shadow"></div>
@@ -138,3 +165,4 @@
     <script src="liderboard.js"></script>
   </body>
 </html>
+

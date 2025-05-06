@@ -44,6 +44,10 @@
     align-items: center;
     }
 
+    .logo-Quiz-BiH{
+        margin-bottom: 30px;
+    }
+
     .login-section {
     display: flex;
     flex-direction: column;

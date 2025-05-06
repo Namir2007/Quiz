@@ -20,3 +20,13 @@ const createUser = () => {
       console.log(error);
     });
 };
+
+
+  function showQuiz() {
+    document.getElementById('introQuiz').style.display = 'flex';
+  }
+
+  function hideQuiz() {
+    document.getElementById('introQuiz').style.display = 'none';
+  }
+
