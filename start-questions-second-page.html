@@ -18,10 +18,7 @@
         Najbolji rezultat: 200
       </div>
       <div class="streak" id="list">
-        <img
-          src="photos/star.svg"
-          alt="Streak"
-        />
+        <img src="photos/star.svg" alt="Streak" />
         Streak: 2
       </div>
       <div class="timer" id="list">
@@ -31,7 +28,7 @@
     <div class="container">
       <div class="question-box">
         <span>Pitanje 1 od 20</span>
-        <a href="finish-page.html" class="button">Završi kviz</a>
+        <button id="start" onclick="showFinish()">Završi kviz</button>
       </div>
       <p class="text-content">
         Koji historijski događaj se desio 25. novembra 1943. godine u Mrkonjić
@@ -55,6 +52,31 @@
         </button>
       </div>
     </div>
+
+    <div class="popup-finish" id="finishQuiz">
+      <div class="popup-content">
+        <div class="logo-Quiz-BiH-2"></div>
+        <div class="finish-header">
+          <h1>Čestitamo na završenom kvizu !!</h1>
+          <p>U prilogu pogledajte svoju statistiku :</p>
+        </div>
+        <div class="finish-body">
+          <div class="finish-row">
+            <p>Osvojili ste: <span id="bodovi-zavrsni">100</span></p>
+            <img src="photos/medalja5.svg" class="finish-icon">
+          </div>
+          <div class="finish-row">
+            <p>Leaderboard: <span id="mjesto-zavrsni">1</span></p>
+            <img src="photos/trofej4.svg" class="finish-icon">
+          </div>
+        </div>
+        <div class="finish-buttons">
+          <button class="btn-odustani" onclick="closeFinish()">Zatvori</button>
+          <a href="index.html"><button class="btn-start">Leaderboard</button></a>
+        </div>
+      </div>
+    </div>
+    
 
     <script src="start-quiz.js"></script>
   </body>

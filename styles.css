@@ -446,6 +446,7 @@
   width: 314px;
   height: 23px;
   display: flex;
+  margin-bottom: 20px;
   background-image: url(photos/Quiz\ BiH.png);
   background-repeat: no-repeat;
   background-size: contain;
@@ -464,45 +465,58 @@
   font-size: 16px;
 }
 
-.container-2 img {
-  width: 40px;
-  height: 40px;
-}
-
 .pp1, .pp2, .pp3 {
   display: flex;
-} 
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  justify-content: flex-start;
+}
 
 .img-pp {
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
 }
 
 .container-3 {
   display: flex;
   flex-direction: row;
-  margin-left: 100px;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.btn-odustani,
+.btn-start {
+  width: 140px;
+  padding: 12px 0;
+  font-size: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .btn-odustani {
   background-color: white;
   color: #2559d2;
   border: 2px solid #2559d2;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
 }
 
 .btn-start {
   background-color: #2559d2;
   color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
+  border: 2px solid #2559d2;
 }
+
+.btn-odustani:hover,
+.btn-start:hover {
+  transform: scale(1.05);
+}
+
+
 
 
 @media screen and (max-width: 768px) {

@@ -152,3 +152,113 @@ h1 span {
 .option-btn:hover {
   background-color: #f1f1f1;
 }
+
+.popup-finish {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.2);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 40px;
+  border-radius: 15px;
+  width: 402px;
+  height: 504px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.finish-header h1 {
+  font-size: 25px;
+  margin-bottom: 5px;
+}
+
+.logo-Quiz-BiH-2 {
+  width: 314px;
+  height: 23px;
+  display: flex;
+  margin-bottom: 20px;
+  background-image: url(photos/Quiz\ BiH.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.finish-header p {
+  font-size: 14px;
+}
+
+.finish-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.finish-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+}
+
+.finish-row p {
+  margin: 0;
+}
+
+.finish-row span {
+  font-weight: bold;
+}
+
+.finish-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.finish-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.btn-odustani,
+.btn-start {
+  width: 140px;
+  padding: 12px 0;
+  font-size: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-odustani {
+  background-color: white;
+  color: #2559d2;
+  border: 2px solid #2559d2;
+}
+
+.btn-start {
+  background-color: #2559d2;
+  color: white;
+  border: 2px solid #2559d2;
+}
+
+.btn-odustani:hover,
+.btn-start:hover {
+  transform: scale(1.05);
+}

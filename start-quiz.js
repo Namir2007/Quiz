@@ -89,3 +89,18 @@ async function submitAnswer(questionId, answerId) {
 }
 
 window.addEventListener("DOMContentLoaded", startQuiz);
+
+
+
+
+
+
+function showFinish() {
+  document.getElementById('finishQuiz').style.display = 'flex';
+  document.getElementById('bodovi-zavrsni').innerText = '100'; // Promijeni vrijednost prema rezultatu
+  document.getElementById('mjesto-zavrsni').innerText = '1';
+}
+
+function closeFinish() {
+  document.getElementById('finishQuiz').style.display = 'none';
+}
