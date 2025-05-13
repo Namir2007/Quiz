@@ -140,7 +140,7 @@
   cursor: pointer;
 }
 
-#start {
+.start {
   width: 384px;
   height: 71px;
   background-color: #2559d2;
@@ -308,7 +308,7 @@
   margin-top: 60px;
 }
 
-#start2 {
+.start2 {
   width: 280px;
   height: 50px;
   background-color: #2559d2;
@@ -497,6 +497,20 @@
   cursor: pointer;
   transition: 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+  .btn-start {
+  background-color: white;
+  color: #2559d2;
+  border: 2px solid #2559d2;
+  width: 140px;
+  padding: 12px 0;
+  font-size: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
 }
 
 .btn-odustani {

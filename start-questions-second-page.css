@@ -1,3 +1,5 @@
+* {
+  font-family: "Steradian TRIAL", Arial, sans-serif;}
 body {
   margin: 0;
   font-family: "Steradian TRIAL", Arial, sans-serif;
@@ -189,6 +191,7 @@ h1 span {
   height: 23px;
   display: flex;
   margin-bottom: 20px;
+  margin-top: 30px;
   background-image: url(photos/Quiz\ BiH.png);
   background-repeat: no-repeat;
   background-size: contain;
@@ -196,15 +199,18 @@ h1 span {
 }
 
 .finish-header p {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .finish-body {
+  font-size: 18px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   width: 100%;
   align-items: flex-start;
+  margin-top: 20px;
+  margin-left: 150px;
 }
 
 .finish-row {
@@ -232,7 +238,27 @@ h1 span {
   flex-direction: row;
   justify-content: center;
   gap: 16px;
-  margin-top: 20px;
+  margin-top: 100px;
+}
+
+.p{
+  margin-left: 200px;
+}
+
+.start{
+  width: 118px;
+  height: 40px;
+  background-color: white;
+  color: #2559d2;
+  border: 2px solid #2559d2;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-left: 150px;
+  display: flex;
+  justify-content: center;  
+  align-items: center;
 }
 
 .btn-odustani,
