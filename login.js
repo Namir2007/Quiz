@@ -31,7 +31,7 @@ async function loginUser() {
     const data = await response.json();
 
     if (response.ok) {
-      localStorage.setItem("authToken", data.token);
+      localStorage.setItem("token", data.token);
       console.log("Token je sačuvan:", data.token);
       window.location.href = "index.html";
     } else {

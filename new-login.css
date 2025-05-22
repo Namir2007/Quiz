@@ -121,8 +121,67 @@
     a {
     color: #4285f4;
     text-decoration: none;
+    cursor: pointer;
     }
 
     .racun {
     margin-top: 20px;
+    }
+
+    /* Global cursor styles */
+    button,
+    .btn,
+    .form-submit,
+    .login-button,
+    .register-link,
+    .forgot-password {
+    cursor: pointer;
+    }
+
+    /* Responsive Design */
+    @media screen and (max-width: 480px) {
+      .container {
+        width: 90%;
+        padding: 30px 20px;
+      }
+
+      .logo-Quiz-BiH {
+        width: 80px;
+        height: 25px;
+        margin-bottom: 20px;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+
+      p {
+        font-size: 13px;
+      }
+
+      form {
+        gap: 20px;
+      }
+
+      input {
+        width: 100%;
+        font-size: 14px;
+      }
+
+      button[type="submit"] {
+        width: 100%;
+        font-size: 14px;
+        margin-top: 30px;
+      }
+
+      .button-text {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .first-part,
+      .second-part {
+        margin: 0;
+      }
     }

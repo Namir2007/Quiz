@@ -4,80 +4,73 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="start-questions-second-page.css" />
-    <title>Document</title>
+    <title>Quiz BiH</title>
   </head>
   <body>
-    <h1>Quiz <span>BiH</span></h1>
-    <div class="header">
-      <div class="bodovi" id="list">
-        <img src="photos/trophy.svg" alt="Bodovi" />
-        Bodovi: 0
+    <div class="quiz-container">
+      <h1>Quiz <span>BiH</span></h1>
+      
+      <div class="stats-container">
+        <div class="stat-card">
+          <img src="photos/trophy.svg" alt="Bodovi" />
+          <span>Bodovi: <strong>0</strong></span>
+        </div>
+
+        <div class="stat-card">
+          <img src="photos/medal.svg" alt="Najbolji rezultat" />
+          <span>Najbolji rezultat: <strong>200</strong></span>
+        </div>
+
+        <div class="stat-card">
+          <img src="photos/star.svg" alt="Streak" />
+          <span>Streak: <strong>2</strong></span>
+        </div>
+
+        <div class="stat-card">
+          <img src="photos/clock.svg" alt="Timer" />
+          <span><strong id="timer">30</strong> s</span>
+        </div>
       </div>
-      <div class="najbolji-rezultat" id="list">
-        <img src="photos/medal.svg" alt="Najbolji rezultat" />
-        Najbolji rezultat: 200
-      </div>
-      <div class="streak" id="list">
-        <img src="photos/star.svg" alt="Streak" />
-        Streak: 2
-      </div>
-      <div class="timer" id="list">
-        <img src="photos/clock.svg" alt="Timer" /> 30 s
-      </div>
-    </div>
-    <div class="container">
-      <div class="question-box">
-        <p class="p">Pitanje 1 od 20</p>
-        <button class="start" onclick="showFinish()">Završi kviz</button>
-      </div>
-      <p class="text-content">
-        Koji historijski događaj se desio 25. novembra 1943. godine u Mrkonjić
-        Gradu, a smatra se jednim od najvažnijih trenutaka u historiji Bosne i
-        Hercegovine jer je tada donesena odluka o njenoj budućnosti kao
-        ravnopravne republike unutar Jugoslavije?
-      </p>
-      <div class="linija"></div>
-      <div class="options">
-        <button class="option-btn">
-          <span>A</span>
-        </button>
-        <button class="option-btn">
-          <span>B</span>
-        </button>
-        <button class="option-btn">
-          <span>C</span>
-        </button>
-        <button class="option-btn">
-          <span>D</span>
-        </button>
+
+      <div class="question-container">
+        <div class="question-header">
+          <span>Pitanje 1 od 10</span>
+          <button class="end-quiz-btn" onclick="endQuiz()">Zavrsi kviz</button>
+        </div>
+
+        <div class="question-content">
+          <p id="question-text" class="question-text"></p>
+          <div class="progress-bar">
+            <div class="progress" style="width: 30%"></div>
+          </div>
+          <div id="options-container" class="options-container"></div>
+        </div>
       </div>
     </div>
 
-    <div class="popup-finish" id="finishQuiz">
+    <div class="popup-finish" id="quiz-end-modal">
       <div class="popup-content">
         <div class="logo-Quiz-BiH-2"></div>
         <div class="finish-header">
-          <h1>Čestitamo na završenom kvizu !!</h1>
-          <p>U prilogu pogledajte svoju statistiku :</p>
+          <h1>Čestitamo na završenom kvizu!</h1>
+          <p>U prilogu pogledajte svoju statistiku:</p>
         </div>
         <div class="finish-body">
           <div class="finish-row">
-            <p>Osvojili ste: <span id="bodovi-zavrsni">100</span></p>
+            <p>Osvojili ste: <span id="final-score">0</span></p>
             <img src="photos/medalja5.svg" class="finish-icon">
           </div>
           <div class="finish-row">
-            <p>Leaderboard: <span id="mjesto-zavrsni">1</span></p>
+            <p>Pozicija: <span id="final-rank">?</span></p>
             <img src="photos/trofej4.svg" class="finish-icon">
           </div>
         </div>
         <div class="finish-buttons">
-          <button class="btn-odustani" onclick="closeFinish()">Zatvori</button>
-          <a href="index.html"><button class="btn-start">Leaderboard</button></a>
+          <button class="btn-odustani" onclick="closeModal()">Igraj ponovo</button>
+          <button class="btn-start" onclick="goToLeaderboard()">Leaderboard</button>
         </div>
       </div>
     </div>
-    
-
-    <script src="start-quiz.js"></script>
+    <script src="start-questions-second-page.js"></script>
   </body>
 </html>

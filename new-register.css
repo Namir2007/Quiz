@@ -119,3 +119,62 @@
     text-decoration: none;
   }
   
+  /* Global cursor styles */
+  button,
+  .btn,
+  .form-submit,
+  .register-button,
+  .login-link,
+  a {
+    cursor: pointer;
+  }
+  
+  /* Responsive Design */
+  @media screen and (max-width: 480px) {
+    .register-container {
+      width: 90%;
+      padding: 30px 20px;
+    }
+
+    .logo-Quiz-BiH {
+      width: 80px;
+      height: 25px;
+      margin-bottom: 20px;
+    }
+
+    .register-heading {
+      font-size: 20px;
+    }
+
+    .register-paragraph {
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .register-form {
+      gap: 20px;
+    }
+
+    .register-input {
+      width: 100%;
+      font-size: 14px;
+    }
+
+    .register-submit-button {
+      width: 100%;
+      font-size: 14px;
+      margin-top: 30px;
+    }
+
+    .register-link-text {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+    }
+
+    .register-link-text p:last-child {
+      margin-left: 0;
+    }
+  }
+  

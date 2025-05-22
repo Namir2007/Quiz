@@ -29,10 +29,13 @@
             </ul>
           </div>
           <div class="buttons">
-            <a href="login.html"><button id="login">Prijavi se</button></a>
-            <a href="register.html"
-              ><button id="register">Registruj se</button></a
-            >
+            <div class="guest-buttons">
+              <button id="login" onclick="window.location.href='login.html'">Prijavi se</button>
+              <button id="register" onclick="window.location.href='register.html'">Registruj se</button>
+            </div>
+            <div class="user-buttons" style="display: none;">
+              <button id="logout" onclick="handleLogout()">Odjavi se</button>
+            </div>
           </div>
         </div>
         <div class="content">
@@ -87,7 +90,6 @@
           </div>
         </div>
         
-
         <div class="instructions" id="instruction">
           <div class="ins-content">
             <div class="top">
