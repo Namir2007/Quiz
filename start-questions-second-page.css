@@ -248,6 +248,25 @@ h1 span {
   display: flex;
   gap: 15px;
   justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.finish-buttons > :not(.revive-button) {
+  flex: 0 1 calc(50% - 8px);
+}
+
+.revive-button {
+  width: 100%;
+  margin-top: 15px;
+  background-color: #2559d2 !important;
+  color: white !important;
+}
+
+.revive-button:disabled {
+  background-color: #cccccc !important;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 .btn-odustani,
@@ -393,4 +412,92 @@ a {
     padding: 10px 20px;
     font-size: 14px;
   }
+}
+
+.revive-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.revive-button {
+  background-color: #2559d2;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.revive-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(37, 89, 210, 0.2);
+}
+
+.revive-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.coins-counter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(37, 89, 210, 0.1);
+  padding: 6px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.coin-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+#coinsAmount {
+  color: #2559d2;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+#modal-coins {
+  color: #2559d2;
+  font-weight: bold;
+}
+
+.question-header .coins-counter {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.question-header .coins-counter #coinsAmount {
+  color: white;
+}
+
+.logout-btn {
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  margin-left: 10px;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
 }

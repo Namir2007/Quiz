@@ -35,7 +35,13 @@
       <div class="question-container">
         <div class="question-header">
           <span>Pitanje 1 od 10</span>
-          <button class="end-quiz-btn" onclick="endQuiz()">Zavrsi kviz</button>
+          <div class="header-right">
+            <div class="coins-counter">
+              <img src="photos/coin.png" alt="" class="coin-icon">
+              <span id="coinsAmount">0</span>
+            </div>
+            <button class="end-quiz-btn" onclick="endQuiz()">Zavrsi kviz</button>
+          </div>
         </div>
 
         <div class="question-content">
@@ -63,6 +69,10 @@
           <div class="finish-row">
             <p>Pozicija: <span id="final-rank">?</span></p>
             <img src="photos/trofej4.svg" class="finish-icon">
+          </div>
+          <div class="finish-row">
+            <p>Coins: <span id="modal-coins">0</span></p>
+            <img src="photos/coin.png" class="finish-icon">
           </div>
         </div>
         <div class="finish-buttons">

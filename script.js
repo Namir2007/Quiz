@@ -29,41 +29,84 @@ function hideQuiz() {
   document.getElementById('introQuiz').style.display = 'none';
 }
 
-// Funkcija koja se poziva kad se stranica učita
 document.addEventListener('DOMContentLoaded', function() {
   checkAuthState();
+  initializeCoins();
 });
 
-// Provjera stanja autentifikacije
 function checkAuthState() {
   const token = localStorage.getItem('token');
   const guestButtons = document.querySelector('.guest-buttons');
   const userButtons = document.querySelector('.user-buttons');
   
   if (token) {
-    // Korisnik je ulogovan
     guestButtons.style.display = 'none';
     userButtons.style.display = 'flex';
   } else {
-    // Korisnik nije ulogovan
     guestButtons.style.display = 'flex';
     userButtons.style.display = 'none';
   }
 }
 
-// Funkcija za odjavljivanje
 async function handleLogout() {
   try {
-    // Brisanje tokena iz localStorage
-    localStorage.removeItem('token');
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = 'login.html';
+      return;
+    }
+
+    // Pokušaj odjavu na serveru
+    await fetch('https://quiz-be-zeta.vercel.app/auth/logout', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    // Očisti sve lokalne podatke
+    localStorage.clear();
+    sessionStorage.clear();
     
-    // Ažuriranje prikaza dugmadi
+    // Ažuriraj prikaz UI-a
     checkAuthState();
     
-    // Redirect na početnu stranicu
-    window.location.href = 'index.html';
+    // Preusmjeri na početnu
+    window.location.replace('login.html');
   } catch (error) {
     console.error('Error during logout:', error);
+    // Čak i ako server-side logout ne uspije, očisti lokalno
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.replace('login.html');
   }
+}
+
+function initializeCoins() {
+    const coins = localStorage.getItem('userCoins') || 0;
+    document.getElementById('coinsAmount').textContent = coins;
+}
+
+function updateCoins(amount) {
+    const currentCoins = parseInt(localStorage.getItem('userCoins')) || 0;
+    const newAmount = currentCoins + amount;
+    localStorage.setItem('userCoins', newAmount);
+    document.getElementById('coinsAmount').textContent = newAmount;
+}
+
+const token = localStorage.getItem('token');
+if (token) {
+  fetch('https://quiz-be-zeta.vercel.app/auth/profile', {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Profile data:', data);
+  })
+  .catch(error => {
+    console.error('Error fetching profile:', error);
+  });
 }
 

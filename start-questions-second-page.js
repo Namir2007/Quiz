@@ -4,6 +4,7 @@ let streak = 0;
 let timerInterval;
 let currentGameId;
 let currentQuestionId;
+let correctAnswersCount = 0;
 
 // Check authentication when page loads
 document.addEventListener('DOMContentLoaded', async () => {
@@ -12,6 +13,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.location.href = 'login.html';
     return;
   }
+  
+  // Dohvati podatke o korisniku (uključujući coine)
+  await fetchUserData();
   
   // Dohvati najbolji rezultat korisnika
   await fetchBestScore();
@@ -165,17 +169,18 @@ function showQuestion(question) {
         const result = await res.json();
 
         if (result.correct) {
-          // Dodaj bodove sa servera ili default 10 ako server ne vrati bodove
+          correctAnswersCount++;
+          if (correctAnswersCount % 5 === 0) {
+            updateCoins(1);
+          }
           const points = result.points || 10;
           score += points;
           
-          // Povećaj streak za tačan odgovor
           updateStreak(streak + 1);
           
           btn.classList.add("correct");
           document.querySelector('.stat-card:first-child strong').textContent = score;
           
-          // Ako je ovo bilo 10. pitanje, završi kviz
           if (questionNumber === 10) {
             setTimeout(() => {
               endQuiz();
@@ -188,10 +193,8 @@ function showQuestion(question) {
           }
         } else {
           btn.classList.add("wrong");
-          // Reset streak na 0 za netačan odgovor
           updateStreak(0);
           
-          // Prikaži tačan odgovor ako postoji
           const correctOption = question.options.find(opt => opt.correct);
           if (correctOption) {
             const correctButton = Array.from(document.querySelectorAll('.option-btn'))
@@ -200,9 +203,7 @@ function showQuestion(question) {
               correctButton.classList.add("correct");
             }
           }
-          setTimeout(() => {
-            endQuiz();
-          }, 1000);
+          showReviveOption();
         }
       } catch (error) {
         console.error("Error submitting answer:", error);
@@ -265,6 +266,12 @@ function endQuiz() {
   
   document.getElementById('final-score').textContent = score;
   
+  // Dohvati svježe podatke o coinima sa servera prije prikaza
+  fetchUserData().then(() => {
+    const currentCoins = localStorage.getItem('userCoins') || '0';
+    document.getElementById('modal-coins').textContent = currentCoins;
+  });
+  
   updateScore().then(() => {
     fetchUserRank();
   });
@@ -308,6 +315,12 @@ function closeModal() {
   const modal = document.getElementById('quiz-end-modal');
   modal.style.display = 'none';
   
+  // Ukloni revive dugme ako postoji
+  const reviveButton = document.querySelector('.revive-button');
+  if (reviveButton) {
+    reviveButton.remove();
+  }
+  
   // Reset game state
   questionNumber = 1;
   score = 0;
@@ -348,4 +361,184 @@ async function fetchBestScore() {
     console.error("Greška pri dohvatanju najboljeg rezultata:", error);
     document.querySelector('.stat-card:nth-child(2) strong').textContent = '0';
   }
-} 
+}
+
+function showReviveOption() {
+  clearInterval(timerInterval);
+  
+  const currentCoins = parseInt(localStorage.getItem('userCoins')) || 0;
+  const finishButtons = document.querySelector('.finish-buttons');
+  
+  const reviveButton = document.createElement('button');
+  reviveButton.className = 'btn-start revive-button';
+  reviveButton.textContent = 'Nastavi sa kvizom (10 coina)';
+  reviveButton.style.marginTop = '15px';
+  reviveButton.style.width = '100%';
+  reviveButton.onclick = handleRevive;
+  
+  if (currentCoins < 10) {
+    reviveButton.disabled = true;
+    reviveButton.title = 'Potrebno 10 coina';
+  }
+  
+  finishButtons.appendChild(reviveButton);
+  
+  // Prikaži modal
+  const modal = document.getElementById('quiz-end-modal');
+  modal.style.display = 'flex';
+}
+
+async function handleRevive() {
+  const token = localStorage.getItem('token');
+  if (!token) return;
+
+  try {
+    // Prvo provjeri trenutne coine
+    const currentCoins = parseInt(localStorage.getItem('userCoins')) || 0;
+    if (currentCoins < 10) {
+      alert('Nemate dovoljno coina za nastavak!');
+      return;
+    }
+
+    // Prvo oduzmi coine na serveru
+    const updateCoinsResponse = await fetch('https://quiz-be-zeta.vercel.app/auth/update-coins', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 
+        coins: currentCoins - 10 
+      })
+    });
+
+    if (!updateCoinsResponse.ok) {
+      throw new Error('Failed to update coins');
+    }
+
+    // Nastavi sa igrom
+    const response = await fetch('https://quiz-be-zeta.vercel.app/game/revive', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        gameId: currentGameId
+      })
+    });
+
+    const data = await response.json();
+    
+    if (data.success && data.nextQuestion) {
+      // Ažuriraj lokalni prikaz coina
+      localStorage.setItem('userCoins', currentCoins - 10);
+      updateCoinsDisplay(currentCoins - 10);
+      
+      // Ukloni revive dugme i nastavi sa igrom
+      document.querySelector('.revive-container')?.remove();
+      
+      // Sakrij modal ako je otvoren
+      const modal = document.getElementById('quiz-end-modal');
+      if (modal) {
+        modal.style.display = 'none';
+      }
+      
+      // Prikaži novo pitanje
+      showQuestion(data.nextQuestion);
+      
+      // Omogući dugmad za odgovore ponovo
+      document.querySelectorAll(".option-btn").forEach((btn) => {
+        btn.disabled = false;
+        btn.classList.remove("correct", "wrong");
+      });
+    }
+  } catch (error) {
+    console.error('Error during revive:', error);
+    alert('Došlo je do greške prilikom nastavka igre. Pokušajte ponovo.');
+  }
+}
+
+async function fetchUserData() {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  try {
+    const response = await fetch('https://quiz-be-zeta.vercel.app/auth/profile', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch profile');
+    }
+
+    const userData = await response.json();
+    
+    // Ažuriraj prikaz coina na svim mjestima
+    if (userData.coins !== undefined) {
+      localStorage.setItem('userCoins', userData.coins);
+      updateCoinsDisplay(userData.coins);
+    }
+
+    return userData;
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+  }
+}
+
+function updateCoinsDisplay(amount) {
+  const coinsElement = document.getElementById('coinsAmount');
+  const modalCoinsElement = document.getElementById('modal-coins');
+  const headerCoinsElement = document.querySelector('.coins-counter span');
+  
+  if (coinsElement) {
+    coinsElement.textContent = amount;
+  }
+  if (modalCoinsElement) {
+    modalCoinsElement.textContent = amount;
+  }
+  if (headerCoinsElement) {
+    headerCoinsElement.textContent = amount;
+  }
+}
+
+async function updateCoins(amount) {
+  const token = localStorage.getItem('token');
+  if (!token) return;
+
+  const currentCoins = parseInt(localStorage.getItem('userCoins')) || 0;
+  const newAmount = currentCoins + amount;
+
+  try {
+    const response = await fetch('https://quiz-be-zeta.vercel.app/auth/update-coins', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ coins: newAmount })
+    });
+
+    if (response.ok) {
+      localStorage.setItem('userCoins', newAmount);
+      updateCoinsDisplay(newAmount);
+      
+      // Dohvati svježe podatke sa servera nakon ažuriranja
+      await fetchUserData();
+    } else {
+      throw new Error('Failed to update coins on server');
+    }
+  } catch (error) {
+    console.error('Error updating coins:', error);
+  }
+}
+
+// Dodaj periodično osvježavanje coina
+setInterval(async () => {
+  await fetchUserData();
+}, 30000); // Osvježi svakih 30 sekundi 
