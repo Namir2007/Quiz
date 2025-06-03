@@ -128,7 +128,6 @@
     margin-top: 20px;
     }
 
-    /* Global cursor styles */
     button,
     .btn,
     .form-submit,
@@ -137,8 +136,7 @@
     .forgot-password {
     cursor: pointer;
     }
-
-    /* Responsive Design */
+    
     @media screen and (max-width: 480px) {
       .container {
         width: 90%;

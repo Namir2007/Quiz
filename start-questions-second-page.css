@@ -237,6 +237,21 @@ h1 span {
   padding: 15px;
   background: var(--background-color);
   border-radius: var(--border-radius);
+  transition: all 0.3s ease;
+}
+
+.finish-row p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.finish-row span {
+  color: var(--primary-color);
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .finish-icon {
@@ -500,4 +515,21 @@ a {
 .logout-btn:hover {
   background: rgba(255, 255, 255, 0.1);
   transform: translateY(-2px);
+}
+
+.rank-updated {
+  animation: rankUpdate 0.5s ease-in-out;
+}
+
+@keyframes rankUpdate {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+    color: var(--primary-color);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

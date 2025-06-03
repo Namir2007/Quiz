@@ -14,7 +14,6 @@
   --border-radius: 10px;
 }
 
-/* Base styles */
 .container {
   display: flex;
   align-items: center;
@@ -23,7 +22,6 @@
   flex-direction: column;
 }
 
-/* Header styles */
 .header {
   width: 82vw;
   height: auto;
@@ -117,7 +115,6 @@
   cursor: pointer;
 }
 
-/* Hero section */
 .content {
   width: 100vw;
   height: 92vh;
@@ -238,7 +235,6 @@
   align-items: center;
 }
 
-/* Instructions section */
 .instructions {
   width: 100%;
   padding: 80px 0;
@@ -312,7 +308,6 @@
   margin-bottom: 10px;
 }
 
-/* Card backgrounds */
 .card1 {
   background: url('photos/prva\ slika.jpeg') center/cover no-repeat;
 }
@@ -325,7 +320,6 @@
   background: url('photos/treca\ slika.jpeg') center/cover no-repeat;
 }
 
-/* Leaderboard section */
 .leaderboard-cont {
   width: 100vw;
   height: 100vh;
@@ -435,7 +429,6 @@
   margin-top: 60px;
 }
 
-/* Quiz popup */
 .introduction-quiz {
   position: fixed;
   top: 0;
@@ -533,7 +526,6 @@
   transform: scale(1.05);
 }
 
-/* Responsive Design */
 @media screen and (max-width: 1200px) {
   :root {
     --container-width: 90%;

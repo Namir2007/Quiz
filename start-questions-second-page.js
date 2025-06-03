@@ -1,12 +1,11 @@
-let questionNumber = 1;
-let score = 0;
-let streak = 0;
 let timerInterval;
 let currentGameId;
 let currentQuestionId;
+let questionNumber = 1;
+let score = 0;
+let streak = 0;
 let correctAnswersCount = 0;
 
-// Check authentication when page loads
 document.addEventListener('DOMContentLoaded', async () => {
   const token = localStorage.getItem("token");
   if (!token) {
@@ -14,16 +13,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
   
-  // Dohvati podatke o korisniku (uključujući coine)
   await fetchUserData();
   
-  // Dohvati najbolji rezultat korisnika
   await fetchBestScore();
   
-  // Reset streak
   updateStreak(0);
   
-  // Započni kviz
   loadQuestion();
 });
 
@@ -59,9 +54,15 @@ async function loadQuestion() {
     const token = localStorage.getItem("token");
     
     if (!token) {
+      console.error('No authentication token found');
       window.location.href = 'login.html';
       return;
     }
+
+    const optionsContainer = document.getElementById("options-container");
+    const questionText = document.getElementById("question-text");
+    if (optionsContainer) optionsContainer.innerHTML = "";
+    if (questionText) questionText.textContent = "Učitavanje pitanja...";
 
     const res = await fetch("https://quiz-be-zeta.vercel.app/game/start", {
       method: "POST",
@@ -73,24 +74,38 @@ async function loadQuestion() {
 
     if (!res.ok) {
       if (res.status === 401) {
+        console.error('Authentication failed');
         localStorage.removeItem('token');
         window.location.href = 'login.html';
         return;
       }
-      throw new Error('Failed to fetch questions');
+      throw new Error(`Failed to fetch questions: ${res.status}`);
     }
 
     const data = await res.json();
 
     if (!data.question) {
-      throw new Error('No questions available');
+      throw new Error('No questions available from server');
     }
-
     currentGameId = data.gameId;
     showQuestion(data.question);
+
+    const progressBar = document.querySelector('.progress');
+    if (progressBar) progressBar.style.width = '10%';
+    
+    document.querySelectorAll(".option-btn").forEach((btn) => {
+      btn.disabled = false;
+      btn.classList.remove("correct", "wrong");
+    });
+
   } catch (error) {
-    console.error(error);
+    console.error('Error in loadQuestion:', error);
     alert('Došlo je do greške pri učitavanju pitanja. Molimo pokušajte ponovo.');
+    
+    const questionText = document.getElementById("question-text");
+    if (questionText) {
+      questionText.textContent = "Došlo je do greške pri učitavanju pitanja. Kliknite 'Igraj ponovo' da pokušate ponovo.";
+    }
   }
 }
 
@@ -117,13 +132,11 @@ function updateStreak(newStreak) {
 }
 
 function showQuestion(question) {
-  // Ako je korisnik završio 10 pitanja ili nema više pitanja, završi kviz
   if (!question || questionNumber > 10) {
     endQuiz();
     return;
   }
-
-  // Koristimo vrijeme iz odgovora servera ili default 30 sekundi ako nije postavljeno
+  
   const timeLimit = question.timeLimit || 30;
   startTimer(timeLimit);
 
@@ -131,12 +144,10 @@ function showQuestion(question) {
 
   document.getElementById("question-text").textContent = question.title;
   
-  // Update progress bar
   const progressBar = document.querySelector('.progress');
   const progressPercentage = (questionNumber / 10) * 100;
   progressBar.style.width = `${progressPercentage}%`;
 
-  // Update question number
   document.querySelector('.question-header span').textContent = `Pitanje ${questionNumber} od 10`;
 
   const optionsContainer = document.getElementById("options-container");
@@ -222,7 +233,6 @@ async function updateScore() {
   if (!token) return;
   
   try {
-    // Prvo dohvatimo trenutni profil korisnika
     const profileResponse = await fetch("https://quiz-be-zeta.vercel.app/auth/profile", {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -235,7 +245,6 @@ async function updateScore() {
     
     const userData = await profileResponse.json();
     
-    // Uvijek šaljemo novi score na server
     const updateResponse = await fetch("https://quiz-be-zeta.vercel.app/leaderboard/update", {
       method: "POST",
       headers: {
@@ -248,13 +257,18 @@ async function updateScore() {
     if (!updateResponse.ok) {
       throw new Error('Failed to update score');
     }
-
-    // Ako je novi score veći od najboljeg, ažuriramo prikaz
+    
     if (score > userData.bestScore) {
-      document.querySelector('.stat-card:nth-child(2) strong').textContent = score;
+      const bestScoreElement = document.querySelector('.stat-card:nth-child(2) strong');
+      if (bestScoreElement) {
+        bestScoreElement.textContent = score;
+      }
     }
+
+    return score;
   } catch (error) {
     console.error("Greška pri ažuriranju rezultata:", error);
+    alert('Došlo je do greške pri ažuriranju rezultata. Pokušajte ponovo.');
   }
 }
 
@@ -262,18 +276,25 @@ function endQuiz() {
   clearInterval(timerInterval);
   
   const modal = document.getElementById('quiz-end-modal');
+  if (!modal) return;
+  
   modal.style.display = 'flex';
   
-  document.getElementById('final-score').textContent = score;
-  
-  // Dohvati svježe podatke o coinima sa servera prije prikaza
-  fetchUserData().then(() => {
-    const currentCoins = localStorage.getItem('userCoins') || '0';
-    document.getElementById('modal-coins').textContent = currentCoins;
-  });
+  const finalScoreElement = document.getElementById('final-score');
+  if (finalScoreElement) {
+    finalScoreElement.textContent = score;
+  }
   
   updateScore().then(() => {
-    fetchUserRank();
+    fetchUserRank().then(() => {
+      fetchUserData().then(() => {
+        const currentCoins = localStorage.getItem('userCoins') || '0';
+        const modalCoins = document.getElementById('modal-coins');
+        if (modalCoins) {
+          modalCoins.textContent = currentCoins;
+        }
+      });
+    });
   });
 }
 
@@ -281,7 +302,10 @@ async function fetchUserRank() {
   const token = localStorage.getItem("token");
   
   if (!token) {
-    document.getElementById('final-rank').textContent = "?";
+    const rankElement = document.getElementById('final-rank');
+    if (rankElement) {
+      rankElement.textContent = "?";
+    }
     return;
   }
   
@@ -292,6 +316,10 @@ async function fetchUserRank() {
       },
     });
     
+    if (!leaderboardResponse.ok) {
+      throw new Error('Failed to fetch leaderboard');
+    }
+    
     const leaderboardData = await leaderboardResponse.json();
     
     const profileResponse = await fetch("https://quiz-be-zeta.vercel.app/auth/profile", {
@@ -300,38 +328,82 @@ async function fetchUserRank() {
       },
     });
     
+    if (!profileResponse.ok) {
+      throw new Error('Failed to fetch profile');
+    }
+    
     const currentUser = await profileResponse.json();
     
     const userRank = leaderboardData.findIndex(user => user.username === currentUser.username) + 1;
-    document.getElementById('final-rank').textContent = userRank > 0 ? `#${userRank}` : "?";
     
+    const rankElement = document.getElementById('final-rank');
+    if (rankElement) {
+      if (userRank > 0) {
+        rankElement.textContent = `#${userRank}`;
+        rankElement.classList.add('rank-updated');
+      } else {
+        rankElement.textContent = "?";
+      }
+    }
+    
+    return userRank;
   } catch (error) {
-    console.error("Greška pri dohvaćanju podataka:", error);
-    document.getElementById('final-rank').textContent = "?";
+    console.error("Greška pri dohvaćanju ranka:", error);
+    const rankElement = document.getElementById('final-rank');
+    if (rankElement) {
+      rankElement.textContent = "?";
+    }
   }
 }
 
 function closeModal() {
-  const modal = document.getElementById('quiz-end-modal');
-  modal.style.display = 'none';
-  
-  // Ukloni revive dugme ako postoji
-  const reviveButton = document.querySelector('.revive-button');
-  if (reviveButton) {
-    reviveButton.remove();
+  try {
+    const modal = document.getElementById('quiz-end-modal');
+    if (!modal) {
+      console.error('Quiz end modal not found');
+      return;
+    }
+    modal.style.display = 'none';
+    
+    const reviveButton = document.querySelector('.revive-button');
+    if (reviveButton) {
+      reviveButton.remove();
+    }
+    
+    questionNumber = 1;
+    score = 0;
+    correctAnswersCount = 0;
+    updateStreak(0);
+    
+    const scoreDisplay = document.querySelector('.stat-card:first-child strong');
+    if (scoreDisplay) {
+      scoreDisplay.textContent = '0';
+    } else {
+      console.error('Score display element not found');
+    }
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    
+    const progressBar = document.querySelector('.progress');
+    if (progressBar) {
+      progressBar.style.width = '0%';
+    }
+    
+    const questionDisplay = document.querySelector('.question-header span');
+    if (questionDisplay) {
+      questionDisplay.textContent = 'Pitanje 1 od 10';
+    }
+
+    loadQuestion().catch(error => {
+      console.error('Failed to load new question:', error);
+      alert('Došlo je do greške pri pokretanju novog kviza. Molimo osvježite stranicu i pokušajte ponovo.');
+    });
+  } catch (error) {
+    console.error('Error in closeModal:', error);
+    alert('Došlo je do greške. Molimo osvježite stranicu i pokušajte ponovo.');
   }
-  
-  // Reset game state
-  questionNumber = 1;
-  score = 0;
-  updateStreak(0);
-  document.querySelector('.stat-card:first-child strong').textContent = '0';
-  
-  // Clear any existing timer
-  clearInterval(timerInterval);
-  
-  // Start new game
-  loadQuestion();
 }
 
 function goToLeaderboard() {
@@ -355,7 +427,6 @@ async function fetchBestScore() {
 
     const userData = await profileResponse.json();
     
-    // Ažuriraj prikaz najboljeg rezultata
     document.querySelector('.stat-card:nth-child(2) strong').textContent = userData.bestScore || '0';
   } catch (error) {
     console.error("Greška pri dohvatanju najboljeg rezultata:", error);
@@ -364,43 +435,70 @@ async function fetchBestScore() {
 }
 
 function showReviveOption() {
-  clearInterval(timerInterval);
-  
-  const currentCoins = parseInt(localStorage.getItem('userCoins')) || 0;
-  const finishButtons = document.querySelector('.finish-buttons');
-  
-  const reviveButton = document.createElement('button');
-  reviveButton.className = 'btn-start revive-button';
-  reviveButton.textContent = 'Nastavi sa kvizom (10 coina)';
-  reviveButton.style.marginTop = '15px';
-  reviveButton.style.width = '100%';
-  reviveButton.onclick = handleRevive;
-  
-  if (currentCoins < 10) {
-    reviveButton.disabled = true;
-    reviveButton.title = 'Potrebno 10 coina';
+  try {
+    clearInterval(timerInterval);
+    
+    const currentCoins = parseInt(localStorage.getItem('userCoins')) || 0;
+    const finishButtons = document.querySelector('.finish-buttons');
+    
+    if (!finishButtons) {
+      console.error('Finish buttons container not found');
+      return;
+    }
+    
+    const existingReviveButton = document.querySelector('.revive-button');
+    if (existingReviveButton) {
+      existingReviveButton.remove();
+    }
+    
+    const reviveButton = document.createElement('button');
+    reviveButton.className = 'btn-start revive-button';
+    reviveButton.textContent = 'Nastavi sa kvizom (10 coina)';
+    reviveButton.style.marginTop = '15px';
+    reviveButton.style.width = '100%';
+    
+    if (currentCoins < 10) {
+      reviveButton.disabled = true;
+      reviveButton.title = 'Potrebno 10 coina';
+      reviveButton.style.opacity = '0.7';
+      reviveButton.style.cursor = 'not-allowed';
+    } else {
+      reviveButton.title = 'Kliknite da nastavite kviz za 10 coina';
+      reviveButton.onclick = handleRevive;
+    }
+    
+    finishButtons.appendChild(reviveButton);
+    
+    const modal = document.getElementById('quiz-end-modal');
+    if (modal) {
+      modal.style.display = 'flex';
+      
+      const modalTitle = modal.querySelector('.finish-header h1');
+      const modalMessage = modal.querySelector('.finish-header p');
+      
+      if (modalTitle) modalTitle.textContent = 'Netačan odgovor!';
+      if (modalMessage) modalMessage.textContent = 'Možete nastaviti kviz za 10 coina ili završiti kviz i sačuvati trenutni rezultat.';
+    }
+  } catch (error) {
+    console.error('Error showing revive option:', error);
+    endQuiz();
   }
-  
-  finishButtons.appendChild(reviveButton);
-  
-  // Prikaži modal
-  const modal = document.getElementById('quiz-end-modal');
-  modal.style.display = 'flex';
 }
 
 async function handleRevive() {
   const token = localStorage.getItem('token');
-  if (!token) return;
+  if (!token) {
+    window.location.href = 'login.html';
+    return;
+  }
 
   try {
-    // Prvo provjeri trenutne coine
     const currentCoins = parseInt(localStorage.getItem('userCoins')) || 0;
     if (currentCoins < 10) {
       alert('Nemate dovoljno coina za nastavak!');
       return;
     }
 
-    // Prvo oduzmi coine na serveru
     const updateCoinsResponse = await fetch('https://quiz-be-zeta.vercel.app/auth/update-coins', {
       method: 'POST',
       headers: {
@@ -416,7 +514,6 @@ async function handleRevive() {
       throw new Error('Failed to update coins');
     }
 
-    // Nastavi sa igrom
     const response = await fetch('https://quiz-be-zeta.vercel.app/game/revive', {
       method: 'POST',
       headers: {
@@ -428,34 +525,55 @@ async function handleRevive() {
       })
     });
 
+    if (!response.ok) {
+      throw new Error('Failed to revive game');
+    }
+
     const data = await response.json();
     
     if (data.success && data.nextQuestion) {
-      // Ažuriraj lokalni prikaz coina
       localStorage.setItem('userCoins', currentCoins - 10);
       updateCoinsDisplay(currentCoins - 10);
       
-      // Ukloni revive dugme i nastavi sa igrom
-      document.querySelector('.revive-container')?.remove();
-      
-      // Sakrij modal ako je otvoren
       const modal = document.getElementById('quiz-end-modal');
       if (modal) {
         modal.style.display = 'none';
       }
       
-      // Prikaži novo pitanje
+      const reviveButton = document.querySelector('.revive-button');
+      if (reviveButton) {
+        reviveButton.remove();
+      }
+      
       showQuestion(data.nextQuestion);
       
-      // Omogući dugmad za odgovore ponovo
       document.querySelectorAll(".option-btn").forEach((btn) => {
         btn.disabled = false;
         btn.classList.remove("correct", "wrong");
       });
+    } else {
+      throw new Error('Failed to get next question');
     }
   } catch (error) {
     console.error('Error during revive:', error);
     alert('Došlo je do greške prilikom nastavka igre. Pokušajte ponovo.');
+    
+    try {
+      const response = await fetch('https://quiz-be-zeta.vercel.app/auth/update-coins', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ coins: currentCoins })
+      });
+      if (response.ok) {
+        localStorage.setItem('userCoins', currentCoins);
+        updateCoinsDisplay(currentCoins);
+      }
+    } catch (restoreError) {
+      console.error('Failed to restore coins:', restoreError);
+    }
   }
 }
 
@@ -478,8 +596,8 @@ async function fetchUserData() {
     }
 
     const userData = await response.json();
+  
     
-    // Ažuriraj prikaz coina na svim mjestima
     if (userData.coins !== undefined) {
       localStorage.setItem('userCoins', userData.coins);
       updateCoinsDisplay(userData.coins);
@@ -528,7 +646,6 @@ async function updateCoins(amount) {
       localStorage.setItem('userCoins', newAmount);
       updateCoinsDisplay(newAmount);
       
-      // Dohvati svježe podatke sa servera nakon ažuriranja
       await fetchUserData();
     } else {
       throw new Error('Failed to update coins on server');
@@ -538,7 +655,6 @@ async function updateCoins(amount) {
   }
 }
 
-// Dodaj periodično osvježavanje coina
 setInterval(async () => {
   await fetchUserData();
-}, 30000); // Osvježi svakih 30 sekundi 
+}, 30000);

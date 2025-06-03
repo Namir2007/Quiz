@@ -56,7 +56,6 @@ async function handleLogout() {
       return;
     }
 
-    // Pokušaj odjavu na serveru
     await fetch('https://quiz-be-zeta.vercel.app/auth/logout', {
       method: 'POST',
       headers: {
@@ -64,18 +63,14 @@ async function handleLogout() {
       }
     });
 
-    // Očisti sve lokalne podatke
     localStorage.clear();
     sessionStorage.clear();
     
-    // Ažuriraj prikaz UI-a
     checkAuthState();
     
-    // Preusmjeri na početnu
     window.location.replace('login.html');
   } catch (error) {
     console.error('Error during logout:', error);
-    // Čak i ako server-side logout ne uspije, očisti lokalno
     localStorage.clear();
     sessionStorage.clear();
     window.location.replace('login.html');
