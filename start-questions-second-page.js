@@ -245,7 +245,7 @@ async function updateScore() {
     
     const userData = await profileResponse.json();
     
-    const updateResponse = await fetch("https://quiz-be-zeta.vercel.app/leaderboard/update", {
+    const updateResponse = await fetch("https://quiz-be-zeta.vercel.app/leaderboard", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -475,9 +475,20 @@ function showReviveOption() {
       
       const modalTitle = modal.querySelector('.finish-header h1');
       const modalMessage = modal.querySelector('.finish-header p');
+      const finalScoreElement = document.getElementById('final-score');
+      const modalCoins = document.getElementById('modal-coins');
+      const rankElement = document.getElementById('final-rank');
       
       if (modalTitle) modalTitle.textContent = 'Netačan odgovor!';
       if (modalMessage) modalMessage.textContent = 'Možete nastaviti kviz za 10 coina ili završiti kviz i sačuvati trenutni rezultat.';
+      if (finalScoreElement) finalScoreElement.textContent = score;
+      if (modalCoins) modalCoins.textContent = currentCoins;
+      
+      fetchUserRank().then(rank => {
+        if (rankElement && rank > 0) {
+          rankElement.textContent = `#${rank}`;
+        }
+      });
     }
   } catch (error) {
     console.error('Error showing revive option:', error);
@@ -492,26 +503,12 @@ async function handleRevive() {
     return;
   }
 
+  const currentCoins = parseInt(localStorage.getItem('userCoins')) || 0;
+  
   try {
-    const currentCoins = parseInt(localStorage.getItem('userCoins')) || 0;
     if (currentCoins < 10) {
       alert('Nemate dovoljno coina za nastavak!');
       return;
-    }
-
-    const updateCoinsResponse = await fetch('https://quiz-be-zeta.vercel.app/auth/update-coins', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ 
-        coins: currentCoins - 10 
-      })
-    });
-
-    if (!updateCoinsResponse.ok) {
-      throw new Error('Failed to update coins');
     }
 
     const response = await fetch('https://quiz-be-zeta.vercel.app/game/revive', {
@@ -532,8 +529,13 @@ async function handleRevive() {
     const data = await response.json();
     
     if (data.success && data.nextQuestion) {
-      localStorage.setItem('userCoins', currentCoins - 10);
-      updateCoinsDisplay(currentCoins - 10);
+      if (data.coins !== undefined) {
+        localStorage.setItem('userCoins', data.coins);
+        updateCoinsDisplay(data.coins);
+      } else {
+        localStorage.setItem('userCoins', currentCoins - 10);
+        updateCoinsDisplay(currentCoins - 10);
+      }
       
       const modal = document.getElementById('quiz-end-modal');
       if (modal) {
@@ -557,23 +559,6 @@ async function handleRevive() {
   } catch (error) {
     console.error('Error during revive:', error);
     alert('Došlo je do greške prilikom nastavka igre. Pokušajte ponovo.');
-    
-    try {
-      const response = await fetch('https://quiz-be-zeta.vercel.app/auth/update-coins', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ coins: currentCoins })
-      });
-      if (response.ok) {
-        localStorage.setItem('userCoins', currentCoins);
-        updateCoinsDisplay(currentCoins);
-      }
-    } catch (restoreError) {
-      console.error('Failed to restore coins:', restoreError);
-    }
   }
 }
 
@@ -597,7 +582,6 @@ async function fetchUserData() {
 
     const userData = await response.json();
   
-    
     if (userData.coins !== undefined) {
       localStorage.setItem('userCoins', userData.coins);
       updateCoinsDisplay(userData.coins);
@@ -633,7 +617,7 @@ async function updateCoins(amount) {
   const newAmount = currentCoins + amount;
 
   try {
-    const response = await fetch('https://quiz-be-zeta.vercel.app/auth/update-coins', {
+    const response = await fetch('https://quiz-be-zeta.vercel.app/game/update-coins', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
